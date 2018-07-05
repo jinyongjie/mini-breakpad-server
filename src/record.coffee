@@ -1,7 +1,7 @@
 path = require 'path'
 formidable = require 'formidable'
 uuid = require 'node-uuid'
-
+multiparty = require 'gzipped-multiparty'
 class Record
   id: null
   time: null
@@ -16,16 +16,16 @@ class Record
 
   # Public: Parse web request to get the record.
   @createFromRequest: (req, callback) ->
-    form = new formidable.IncomingForm()
+    form = new multiparty.Form()
     form.parse req, (error, fields, files) ->
-      unless files.upload_file_minidump?.name?
+      unless files.upload_file_minidump?[0].fieldName?
         return callback new Error('Invalid breakpad upload')
 
       record = new Record
-        path: files.upload_file_minidump.path
+        path: files.upload_file_minidump[0].path
         sender: {ua: req.headers['user-agent'], ip: Record.getIpAddress(req)}
-        product: fields.prod
-        version: fields.ver
+        product: fields.product
+        version: fields.version
         fields: fields
       callback(null, record)
 
