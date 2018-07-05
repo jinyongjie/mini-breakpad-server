@@ -38,6 +38,14 @@ app.post '/post', (req, res, next) ->
     res.send path.basename(filename)
     res.end()
 
+app.post '/submit', (req, res, next) ->
+  saver.saveRequest req, db, (err, filename) ->
+    return next err if err?
+
+    console.log 'saved', filename
+    res.send path.basename(filename)
+    res.end()
+
 root =
   if process.env.MINI_BREAKPAD_SERVER_ROOT?
     "#{process.env.MINI_BREAKPAD_SERVER_ROOT}/"
