@@ -6,6 +6,7 @@ reader = require './reader'
 saver = require './saver'
 Database = require './database'
 WebHook = require './webhook'
+downloader = require './downloader'
 
 app = express()
 webhook = new WebHook
@@ -21,6 +22,7 @@ app.set 'view engine', 'jade'
 app.use bodyParser.json()
 app.use bodyParser.urlencoded({extended: true})
 app.use methodOverride()
+
 app.use (err, req, res, next) ->
   res.send 500, "Bad things happened:<br/> #{err.message}"
 
@@ -63,3 +65,6 @@ app.get "/#{root}view/:id", (req, res, next) ->
       return next err if err?
       fields = record.fields
       res.render 'view', {title: 'Crash Report', report, fields}
+
+app.get "/download/:id", (req, res, next) ->
+  downloader.download req, res, next

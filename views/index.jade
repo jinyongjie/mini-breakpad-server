@@ -5,5 +5,10 @@ block content
   ol
     each record in records
       li
-        a(href='view/' + record.id)
-          = (record.fields._productName?record.fields._productName:record.fields.version) + ' ' + record.fields.platform +' ' + record.time.toLocaleString()
+        div(style='display:inline')
+          a(href='view/' + record.id)
+            = (record.fields._productName?record.fields._productName:record.fields.version) + ' ' + record.fields.platform +' ' + record.time.toLocaleString()
+          p(style='display:inline')
+            = ' '
+          a(href='download/' + record.id)
+            = '  下载'
