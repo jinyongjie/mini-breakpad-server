@@ -7,7 +7,7 @@ block content
       li
         div(style='display:inline')
           a(href='view/' + record.id)
-            = (record.fields._productName?record.fields._productName:record.fields.version) + ' ' + record.fields.platform +' ' + record.time.toLocaleString()
+            =(record.fields.ptype?record.fields.ptype:'')+' '+ (record.fields._productName?record.fields._productName:record.fields.version) + ' ' + record.fields.platform +' ' + record.time.toLocaleString()
           p(style='display:inline')
             = ' '
           a(href='download/' + record.id)
