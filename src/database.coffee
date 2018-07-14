@@ -32,8 +32,9 @@ class Database extends EventEmitter
   getAllRecords: ->
     records = []
     n = 0
+    len = @db.lenght - 2000
     @db.forEach (id, record) ->
-      if(n++<3000)
+      if(n++< len)
         return
       records.push Record.unserialize(id, record)
     records.reverse()
