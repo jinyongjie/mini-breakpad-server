@@ -32,7 +32,7 @@ class Database extends EventEmitter
   getAllRecords: ->
     records = []
     n = 0
-    len = @db.lenght - 2000
+    len = @db.size() - 2000
     @db.forEach (id, record) ->
       if(n++< len)
         return
