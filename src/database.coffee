@@ -31,7 +31,11 @@ class Database extends EventEmitter
   # Public: Returns all records as an array.
   getAllRecords: ->
     records = []
-    @db.forEach (id, record) -> records.push Record.unserialize(id, record)
+    n = 0
+    @db.forEach (id, record) ->
+      if(n++>1000)
+        return
+      records.push Record.unserialize(id, record)
     records.reverse()
 
 module.exports = Database
